@@ -1,15 +1,24 @@
 def renderWorld(cursesScreen):
 
-    awoArbitraryWorldObject = [["o" * 80] * 24]
+    awoArbitraryWorldObject = [["o" for _ in range(80)] for _ in range(24)]
+    awoString = awoObjectToString(awoArbitraryWorldObject)
 
-    cursesScreen.addstr(3, 12, 
-    """Hello
-        World
-    """)
+    cursesScreen.addstr(0, 0, awoString)
     pass
 
 def renderInitialAcorn(cursesScreen):
     pass
 
-if __name__ == "__name__":
-    pass
+def awoObjectToString(awoArbitraryWorldObject):
+    awoArbitraryWorldObject = [["o" for _ in range(80)] for _ in range(24)]
+    awoString = "" # Define me :)
+    for line in awoArbitraryWorldObject:
+        for char in line:
+            awoString += char
+        awoString += "\n"
+    return awoString
+
+if __name__ == "__main__":
+    awoString = awoObjectToString([["o" for _ in range(80)] for _ in range(24)])
+
+    print("\n" + awoString)
