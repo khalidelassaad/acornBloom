@@ -1,18 +1,16 @@
-
+import curses
 
 from animator import startAnimation
-from display import openCursesWindow
 from renderer import renderInitialAcorn, renderWorld
 from utility import startKeyboardListeners
 
-def runSimulation():
-    openCursesWindow()
-    renderWorld()
-    renderInitialAcorn()
+def runSimulation(cursesScreen):
+    renderWorld(cursesScreen)
+    renderInitialAcorn(cursesScreen)
     startKeyboardListeners()
 
     startAnimation()
     return
 
 if __name__ == "__main__":
-    runSimulation()
+    curses.wrapper(runSimulation)
