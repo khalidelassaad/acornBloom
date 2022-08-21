@@ -9,7 +9,7 @@ def runSimulation(cursesScreen):
     height, width = cursesScreen.getmaxyx()
     curses.curs_set(False)
 
-    worldArray = [["o" for _ in range(width)] for _ in range(height)]
+    worldArray = [[" " for _ in range(width)] for _ in range(height)]
 
     startKeyboardListeners()
     startAnimation(worldArray, cursesScreen)
