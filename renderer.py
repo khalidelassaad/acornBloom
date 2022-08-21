@@ -1,5 +1,5 @@
-def renderWorld():
+def renderWorld(cursesScreen):
     pass
 
-def renderInitialAcorn():
+def renderInitialAcorn(cursesScreen):
     pass
