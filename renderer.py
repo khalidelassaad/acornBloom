@@ -1,17 +1,23 @@
+import curses
+
 def renderWorld(cursesScreen):
+    cursesScreen.refresh()
+    pad = curses.newpad(24, 81)
 
     awoArbitraryWorldObject = [["o" for _ in range(80)] for _ in range(24)]
-    awoString = awoObjectToString(awoArbitraryWorldObject)
 
-    cursesScreen.addstr(0, 0, awoString)
-    pass
+    for y in range(24):
+        for x in range(80): # 
+            pad.addch(y,x, awoArbitraryWorldObject[y][x])
+
+    pad.refresh(0, 0, 0, 0, 23, 79)
 
 def renderInitialAcorn(cursesScreen):
     pass
 
 def awoObjectToString(awoArbitraryWorldObject):
     awoArbitraryWorldObject = [["o" for _ in range(80)] for _ in range(24)]
-    awoString = "" # Define me :)
+    awoString = ""
     for line in awoArbitraryWorldObject:
         for char in line:
             awoString += char

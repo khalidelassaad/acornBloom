@@ -7,13 +7,13 @@ from time import sleep
 
 
 def runSimulation(cursesScreen):
+    curses.curs_set(False)
+
     renderWorld(cursesScreen)
     renderInitialAcorn(cursesScreen)
 
-    while True:
-        # cursesScreen.clear()
-        cursesScreen.refresh()
-        sleep(1)
+    cursesScreen.refresh() # may not be necessary
+    cursesScreen.getkey()
 
     startKeyboardListeners()
 
