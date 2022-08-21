@@ -1,9 +1,10 @@
 import curses
 
+
 def renderWorld(cursesScreen, worldArray):
-    height, width = cursesScreen.getmaxyx()
     cursesScreen.refresh()
 
+    height, width = cursesScreen.getmaxyx()
     pad = curses.newpad(height, width + 1)
 
     for y in range(height):
@@ -13,7 +14,7 @@ def renderWorld(cursesScreen, worldArray):
     pad.refresh(0, 0, 0, 0, height - 1, width - 1)
 
 def renderInitialAcorn(cursesScreen):
-    pass
+    cursesScreen.refresh()
 
 
 if __name__ == "__main__":

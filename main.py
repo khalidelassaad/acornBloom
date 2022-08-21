@@ -1,8 +1,8 @@
 import curses
 
 from animator import startAnimation
-from renderer import renderInitialAcorn, renderWorld
 from utility import startKeyboardListeners
+from time import sleep
 
 
 def runSimulation(cursesScreen):
@@ -10,15 +10,10 @@ def runSimulation(cursesScreen):
     curses.curs_set(False)
 
     worldArray = [["o" for _ in range(width)] for _ in range(height)]
-    renderWorld(cursesScreen, worldArray)
-    renderInitialAcorn(cursesScreen)
-
-    cursesScreen.refresh() # may not be necessary
-    cursesScreen.getkey()
 
     startKeyboardListeners()
-
-    startAnimation()
+    startAnimation(worldArray, cursesScreen)
+    cursesScreen.getkey()
     return
 
 if __name__ == "__main__":
