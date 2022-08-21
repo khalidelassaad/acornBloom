@@ -1,0 +1,2 @@
+def openCursesWindow():
+    pass

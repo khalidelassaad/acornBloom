@@ -1,0 +1,2 @@
+def startAnimation():
+    pass
