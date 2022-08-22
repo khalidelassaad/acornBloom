@@ -68,12 +68,32 @@ class Tree:
         if self.age % 1 == 0:
             self.growOneRootSegment()
 
+    def isThereRootAtCoords(self, coords):
+        if not self.treeDict.get(coords):
+            return False
+        return "root" in self.treeDict.get(coords)["type"]
+
+    def isRootTooCrowded(self, coords):
+        numberOfNeighbors = 0
+        displacements = [-1, 0, 1]
+        for i in displacements:
+            for j in displacements:
+                if i == 0 and j == 0:
+                    continue
+                if self.isThereRootAtCoords((coords[0] + i, coords[1] + j)):
+                    numberOfNeighbors += 1
+        return numberOfNeighbors > 3
+
+
     def getGrowableRootSegments(self):
         candidates = []
+        # TODO: split check on density of original root segments
         for coords, data in self.treeDict.items():
+            if self.isRootTooCrowded(coords):
+                continue
             pieceType = data["type"]
             if "root" in pieceType:
-                if pieceType["root"]["outgoingBranches"] < 2:
+                if pieceType["root"]["outgoingBranches"] < 3:
                     possibilities = self.getOutgoingRootPossibilities(coords)
                     if possibilities:
                         candidates.append((coords, possibilities))
@@ -120,7 +140,7 @@ class Tree:
             candidates = candidates[ - ( len(candidates)-1 ) // 4:]
 
         # Encourage: Outward growth!
-        if random.random() < 0.5:
+        if random.random() < 0.2:
             candidates.sort(key = lambda x: abs(x[0][1]))
             candidates = candidates[ - ( len(candidates)-1 ) // 2:]
 
