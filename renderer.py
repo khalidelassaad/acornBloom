@@ -16,11 +16,18 @@ def renderWorld(cursesScreen, worldArray):
     pad.refresh(0, 0, 0, 0, height - 1, width - 1)
     return pad
 
-def drawTreeOnWorldArray(worldArray, tree: Tree):
+def drawTreeOnWorldArray(worldArray, tree: Tree, showAge=False):
+    treeY, treeX = tree.getCoords()
     for coords, symbol in tree.getTreePieces():
-        treeY, treeX = tree.getCoords()
         pieceY, pieceX = coords
         worldArray[treeY + pieceY][treeX + pieceX] = symbol
+    
+    charSpace = 2
+    for char in str(tree.age):
+        worldArray[treeY][treeX + charSpace] = char
+        charSpace += 1
+        
+
 
 if __name__ == "__main__":
     pass
