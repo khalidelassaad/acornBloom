@@ -1,5 +1,7 @@
 import curses
 
+from tree import Tree
+
 
 def renderWorld(cursesScreen, worldArray):
     cursesScreen.refresh()
@@ -12,10 +14,13 @@ def renderWorld(cursesScreen, worldArray):
             pad.addch(y,x, worldArray[y][x])
 
     pad.refresh(0, 0, 0, 0, height - 1, width - 1)
+    return pad
 
-def renderInitialAcorn(cursesScreen):
-    cursesScreen.refresh()
-
+def drawTreeOnWorldArray(worldArray, tree: Tree):
+    for coords, symbol in tree.getTreePieces():
+        treeY, treeX = tree.getCoords()
+        pieceY, pieceX = coords
+        worldArray[treeY + pieceY][treeX + pieceX] = symbol
 
 if __name__ == "__main__":
     pass

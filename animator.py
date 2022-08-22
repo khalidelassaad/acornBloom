@@ -1,19 +1,18 @@
-from renderer import renderInitialAcorn, renderWorld
+from renderer import drawTreeOnWorldArray, renderWorld
 from time import sleep
+from tree import Tree
+from world import initializeWorld 
 
-def initializeWorld(worldArray):
-    height = len(worldArray)
-    width = len(worldArray[0])
-    horizonLevel = (height * 3) // 5
-    worldArray[horizonLevel] = ["-" for _ in range(width)]
 
-def transformWorld(worldArray, i):
-    worldArray[i][i] = "X"
-
-def startAnimation(worldArray, cursesScreen):
+def startAnimationLoop(worldArray, cursesScreen):
+    height, width = cursesScreen.getmaxyx()
     initializeWorld(worldArray)
-    for i in range(20):
-        transformWorld(worldArray, i)
+    trees = [
+        Tree((height * 7) // 10, width // 2)
+    ]
+    while True:
+        for tree in trees:
+            tree.ageOneYear()
+            drawTreeOnWorldArray(worldArray, tree)
         renderWorld(cursesScreen, worldArray)
         sleep(.1)
-    renderInitialAcorn(cursesScreen)

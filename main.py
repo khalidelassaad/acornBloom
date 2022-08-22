@@ -1,6 +1,6 @@
 import curses
 
-from animator import startAnimation
+from animator import startAnimationLoop
 from utility import startKeyboardListeners
 from time import sleep
 
@@ -12,7 +12,7 @@ def runSimulation(cursesScreen):
     worldArray = [[" " for _ in range(width)] for _ in range(height)]
 
     startKeyboardListeners()
-    startAnimation(worldArray, cursesScreen)
+    startAnimationLoop(worldArray, cursesScreen)
     cursesScreen.getkey()
     return
 
