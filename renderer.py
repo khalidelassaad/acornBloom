@@ -18,7 +18,8 @@ def renderWorld(cursesScreen, worldArray):
 
 def drawTreeOnWorldArray(worldArray, tree: Tree, showAge=False):
     treeY, treeX = tree.getCoords()
-    for coords, symbol in tree.getTreePieces():
+    for coords, data in tree.getTreeDictItems():
+        symbol = data["symbol"]
         pieceY, pieceX = coords
         worldArray[treeY + pieceY][treeX + pieceX] = symbol
     

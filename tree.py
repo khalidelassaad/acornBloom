@@ -20,17 +20,24 @@ class Tree:
         5: "-",
     }
 
+    rootDirectionsToOutgoingDisplacement = {
+        1: (0, -1),
+        2: (1, -1),
+        3: (1, 0),
+        4: (1, 1),
+        5: (0, 1)
+    }
+
     def __init__(self, y, x):
         self.y = y
         self.x = x
         self.age = 0
-        self.treeShapeDict = {
+        self.treeDict = {
             (0,0): {
                 "type": {
                     "origin" : None,
                     "root" : {
                         "incomingDirection" : 3,
-                        "outgoingPossibilities": [1, 2, 3, 4, 5],
                         "outgoingBranches" : 0
                     }
                 },
@@ -47,34 +54,61 @@ class Tree:
         return self.age
 
     def handleAging(self):
-        if self.age % 100 == 0:
-            self.addRootSegment()
+        if self.age % 10 == 0:
+            self.growOneRootSegment()
 
     def getGrowableRootSegments(self):
         candidates = []
-        for coords, data in self.treeShapeDict:
+        for coords, data in self.treeDict.items():
             pieceType = data["type"]
             if "root" in pieceType:
                 if pieceType["root"]["outgoingBranches"] < 3:
-                    if pieceType["root"]["outgoingPossibilities"]:
-                        candidates.append(coords)
+                    possibilities = self.getOutgoingRootPossibilities(coords)
+                    if possibilities:
+                        candidates.append((coords, possibilities))
         return candidates
 
-    def addRootSegment(self):
+    def createRootSegmentInTreeDict(self, newCoords, growDirection):
+        self.treeDict[newCoords] = {
+                "type": {
+                    "root" : {
+                        "incomingDirection" : growDirection,
+                        "outgoingBranches" : 0
+                    }
+                },
+                "symbol": Tree.rootDirectionsToSymbol[growDirection]
+            }
+
+    def getOutgoingRootPossibilities(self, rootCoords):
+        possibleDirections = [1,2,3,4,5]
+        returnList = []
+        for possibleDirection in possibleDirections:
+            displacement = Tree.rootDirectionsToOutgoingDisplacement[possibleDirection]
+            newY = rootCoords[0] + displacement[0]
+            newX = rootCoords[1] + displacement[1]
+            if (newY, newX) not in self.treeDict:
+                returnList.append(possibleDirection)
+        return returnList
+
+    def growOneRootSegment(self):
         candidates = self.getGrowableRootSegments()
-        candidate = random.choice(candidates)
-        possibilities = candidate["outgoingPossibilities"]
+        candidateCoords, possibilities = random.choice(candidates)
+        candidate = self.treeDict[candidateCoords]
+
         growDirection = random.choice(possibilities)
+
         # Grow from old segment
-        #   Eliminate possibility that we claimed
-        possibilities.remove(growDirection)
         #   Increment old segment's branch counter
-        candidate["outgoingBranches"] += 1
+        candidate["type"]["root"]["outgoingBranches"] += 1
+
         # Grow new segment
         #   Calculate new coords (with old coords + direction)
+        displacement = Tree.rootDirectionsToOutgoingDisplacement[growDirection]
+        newY = candidateCoords[0] + displacement[0]
+        newX = candidateCoords[1] + displacement[1]
+        newCoords = (newY, newX)
         #   Add a new tree piece
-        #   Give it the correct root data (incoming branch and check all possible directions for root)
-
+        self.createRootSegmentInTreeDict(newCoords, growDirection)
     
-    def getTreePieces(self):
-        return self.treeShapeDict.items()
+    def getTreeDictItems(self):
+        return self.treeDict.items()
