@@ -1,3 +1,5 @@
+import random
+
 class Tree:
     agesDict = {} # define tree stages and age milestones here
     
@@ -46,11 +48,33 @@ class Tree:
 
     def handleAging(self):
         if self.age % 100 == 0:
-            self.addRootSegment
+            self.addRootSegment()
+
+    def getGrowableRootSegments(self):
+        candidates = []
+        for coords, data in self.treeShapeDict:
+            pieceType = data["type"]
+            if "root" in pieceType:
+                if pieceType["root"]["outgoingBranches"] < 3:
+                    if pieceType["root"]["outgoingPossibilities"]:
+                        candidates.append(coords)
+        return candidates
 
     def addRootSegment(self):
-        rootToGrowFrom = self.getRandomRootSegment()
-        rootToGrowFrom.
+        candidates = self.getGrowableRootSegments()
+        candidate = random.choice(candidates)
+        possibilities = candidate["outgoingPossibilities"]
+        growDirection = random.choice(possibilities)
+        # Grow from old segment
+        #   Eliminate possibility that we claimed
+        possibilities.remove(growDirection)
+        #   Increment old segment's branch counter
+        candidate["outgoingBranches"] += 1
+        # Grow new segment
+        #   Calculate new coords (with old coords + direction)
+        #   Add a new tree piece
+        #   Give it the correct root data (incoming branch and check all possible directions for root)
+
     
     def getTreePieces(self):
         return self.treeShapeDict.items()
