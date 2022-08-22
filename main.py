@@ -2,7 +2,6 @@ import curses
 
 from animator import startAnimationLoop
 from utility import startKeyboardListeners
-from time import sleep
 
 
 def runSimulation(cursesScreen):

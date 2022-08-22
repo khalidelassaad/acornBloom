@@ -13,11 +13,19 @@ class Tree:
             -/|\-
     '''
     rootDirectionsToSymbol = {
-        1: "-",
+        1: "_",
         2: "/",
         3: "|",
         4: "\\",
-        5: "-",
+        5: "_",
+    }
+
+    rootDirectionsToInitialPossibilities = {
+        1: [1,2,],
+        2: [1,2,3],
+        3: [2,3,4],
+        4: [3,4,5],
+        5: [4,5]
     }
 
     rootDirectionsToOutgoingDisplacement = {
@@ -54,7 +62,7 @@ class Tree:
         return self.age
 
     def handleAging(self):
-        if self.age % 10 == 0:
+        if self.age % 1 == 0:
             self.growOneRootSegment()
 
     def getGrowableRootSegments(self):
@@ -80,7 +88,8 @@ class Tree:
             }
 
     def getOutgoingRootPossibilities(self, rootCoords):
-        possibleDirections = [1,2,3,4,5]
+        oldDirection = self.treeDict[rootCoords]["type"]["root"]["incomingDirection"]
+        possibleDirections = Tree.rootDirectionsToInitialPossibilities[oldDirection]
         returnList = []
         for possibleDirection in possibleDirections:
             displacement = Tree.rootDirectionsToOutgoingDisplacement[possibleDirection]

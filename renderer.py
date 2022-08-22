@@ -21,7 +21,10 @@ def drawTreeOnWorldArray(worldArray, tree: Tree, showAge=False):
     for coords, data in tree.getTreeDictItems():
         symbol = data["symbol"]
         pieceY, pieceX = coords
-        worldArray[treeY + pieceY][treeX + pieceX] = symbol
+        try:
+            worldArray[treeY + pieceY][treeX + pieceX] = symbol
+        except IndexError:
+            pass
     
     charSpace = 2
     for char in str(tree.age):
