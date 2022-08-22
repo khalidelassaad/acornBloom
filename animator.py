@@ -8,7 +8,8 @@ def startAnimationLoop(worldArray, cursesScreen):
     height, width = cursesScreen.getmaxyx()
     initializeWorld(worldArray)
     trees = [
-        Tree((height * 7) // 10, width // 2)
+        # Tree((height * 7) // 10, width // 2)
+        Tree(2 , width // 2) # TODO: delete me!
     ]
     while True:
         for tree in trees:
@@ -17,4 +18,4 @@ def startAnimationLoop(worldArray, cursesScreen):
             #     return
             drawTreeOnWorldArray(worldArray, tree, showAge=True)
         renderWorld(cursesScreen, worldArray)
-        sleep(.1)
+        sleep(.01)

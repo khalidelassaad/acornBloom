@@ -1,3 +1,4 @@
+import math
 import random
 
 class Tree:
@@ -21,9 +22,9 @@ class Tree:
     }
 
     rootDirectionsToInitialPossibilities = {
-        1: [1,2,],
+        1: [1,2],
         2: [1,2,3],
-        3: [2,3,4],
+        3: [2,4],
         4: [3,4,5],
         5: [4,5]
     }
@@ -52,6 +53,8 @@ class Tree:
                 "symbol": "@"
             }
         }
+        self.rootsLeft = 0
+        self.rootsRight = 0
 
     def getCoords(self):
         return (self.y, self.x)
@@ -70,13 +73,17 @@ class Tree:
         for coords, data in self.treeDict.items():
             pieceType = data["type"]
             if "root" in pieceType:
-                if pieceType["root"]["outgoingBranches"] < 3:
+                if pieceType["root"]["outgoingBranches"] < 2:
                     possibilities = self.getOutgoingRootPossibilities(coords)
                     if possibilities:
                         candidates.append((coords, possibilities))
         return candidates
 
     def createRootSegmentInTreeDict(self, newCoords, growDirection):
+        if newCoords[1] > 0:
+            self.rootsRight += 1
+        elif newCoords[1] < 0:
+            self.rootsLeft += 1
         self.treeDict[newCoords] = {
                 "type": {
                     "root" : {
@@ -101,6 +108,22 @@ class Tree:
 
     def growOneRootSegment(self):
         candidates = self.getGrowableRootSegments()
+
+        # Encourage: Far growth!
+        if random.random() < 0.5:
+            candidates.sort(key = lambda x: math.dist(x[0], (0,0)))
+            candidates = candidates[ - ( len(candidates)-1 ) // 3:]
+
+        # Encourage: Balancing growth!
+        if random.random() < 0.3:
+            candidates.sort(key = lambda x: x[0][1], reverse = self.rootsLeft < self.rootsRight)
+            candidates = candidates[ - ( len(candidates)-1 ) // 4:]
+
+        # Encourage: Outward growth!
+        if random.random() < 0.5:
+            candidates.sort(key = lambda x: abs(x[0][1]))
+            candidates = candidates[ - ( len(candidates)-1 ) // 2:]
+
         candidateCoords, possibilities = random.choice(candidates)
         candidate = self.treeDict[candidateCoords]
 
