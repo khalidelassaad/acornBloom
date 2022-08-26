@@ -30,8 +30,9 @@ class Tree:
 
     def handleAging(self):
         if self.age % 1 == 0:
-            self.growOneRootSegment()
-            # TODO: call self.Roots.handleAging
+            self.rootsObject.handleAging()
 
     def getTreeDictItems(self):
-        return self.treeDict.items()
+        treeDict = dict()
+        treeDict.update(self.rootsObject.getRootDict())
+        return treeDict.items()
