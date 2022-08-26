@@ -88,6 +88,7 @@ class Trunk:
                     "isBranchRoot": False
                 }
             },
+            # TODO: remove all occurrences of debug var
             "symbol": [self._getTrunkChar(), "%"][DEBUGinsertAtBottom]
         }
 
