@@ -1,6 +1,7 @@
 import random
 
 from tree.branches import Branches
+from utility import coordsAdd
 
 
 class Trunk:
@@ -37,8 +38,8 @@ class Trunk:
                     branchCoords = trunkCoords
                     branchObject = trunkSegmentData["type"]["trunk"]["branchObject"]
                     for branchSegmentCoords, branchSegmentDataDict in branchObject.getBranchDict().items():
-                        trunkDictCoords = tuple(sum(x) for x in zip(
-                            branchCoords, branchSegmentCoords))
+                        trunkDictCoords = coordsAdd(
+                            branchCoords, branchSegmentCoords)
                         trunkDict[trunkDictCoords] = branchSegmentDataDict
         return trunkDict
 
