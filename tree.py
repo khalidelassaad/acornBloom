@@ -1,29 +1,24 @@
-import math
-import random
+from roots import Roots
+
 
 class Tree:
-    agesDict = {} # define tree stages and age milestones here
-    
-    
+    agesDict = {}  # define tree stages and age milestones here
 
     def __init__(self, y, x):
         self.y = y
         self.x = x
         self.age = 0
-        self.originDict = {
-            (0,0): {
-                "type": {
-                    "origin" : None,
-                    "root" : {
-                        "incomingDirection" : 3,
-                        "outgoingBranches" : 0
-                    }
-                },
-                "symbol": "@"
-            }
+        self.originDataDict = {
+            "type": {
+                "origin": None,
+                "root": {
+                    "incomingDirection": 3,
+                    "outgoingBranches": 0
+                }
+            },
+            "symbol": "@"
         }
-        self.rootsLeft = 0
-        self.rootsRight = 0
+        self.rootsObject = Roots(self.originDataDict)
 
     def getCoords(self):
         return (self.y, self.x)
@@ -38,7 +33,5 @@ class Tree:
             self.growOneRootSegment()
             # TODO: call self.Roots.handleAging
 
-    
-    
     def getTreeDictItems(self):
         return self.treeDict.items()
