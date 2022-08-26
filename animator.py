@@ -1,7 +1,7 @@
 from renderer import drawTreeOnWorldArray, renderWorld
 from time import sleep
-from tree import Tree
-from world import initializeWorld 
+from tree.tree import Tree
+from world import initializeWorld
 
 
 def startAnimationLoop(worldArray, cursesScreen):

@@ -1,6 +1,6 @@
 import curses
 
-from tree import Tree
+from tree.tree import Tree
 
 
 def renderWorld(cursesScreen, worldArray):
@@ -11,10 +11,11 @@ def renderWorld(cursesScreen, worldArray):
 
     for y in range(height):
         for x in range(width):
-            pad.addch(y,x, worldArray[y][x])
+            pad.addch(y, x, worldArray[y][x])
 
     pad.refresh(0, 0, 0, 0, height - 1, width - 1)
     return pad
+
 
 def drawTreeOnWorldArray(worldArray, tree: Tree, showAge=False):
     treeY, treeX = tree.getCoords()
@@ -25,12 +26,11 @@ def drawTreeOnWorldArray(worldArray, tree: Tree, showAge=False):
             worldArray[treeY + pieceY][treeX + pieceX] = symbol
         except IndexError:
             pass
-    
+
     charSpace = 2
     for char in str(tree.age):
         worldArray[treeY][treeX + charSpace] = char
         charSpace += 1
-        
 
 
 if __name__ == "__main__":

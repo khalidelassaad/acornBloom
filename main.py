@@ -15,5 +15,6 @@ def runSimulation(cursesScreen):
     cursesScreen.getkey()
     return
 
+
 if __name__ == "__main__":
     curses.wrapper(runSimulation)

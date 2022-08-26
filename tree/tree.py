@@ -1,4 +1,4 @@
-from roots import Roots
+from tree.roots import Roots
 
 
 class Tree:
