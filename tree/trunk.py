@@ -1,6 +1,6 @@
 import random
 
-from tree.branch import Branch
+from tree.branches import Branches
 
 
 class Trunk:
@@ -54,7 +54,7 @@ class Trunk:
         branchOriginDataDict["type"]["trunk"]["isBranchRoot"] = True
 
         # Instantiate branch object
-        branchObject = Branch(branchOriginDataDict)
+        branchObject = Branches(branchOriginDataDict)
 
         # Save branch object in trunk dict at coords
         branchOriginDataDict["type"]["trunk"]["branchObject"] = branchObject

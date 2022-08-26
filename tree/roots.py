@@ -3,16 +3,14 @@ import random
 
 
 class Roots:
+    # DIRECTIONS:
+    #     incoming:
+    #         -\|/-
+    #         54321
+    #     outgoing:
+    #         12345
+    #         -/|\-
 
-    '''
-    DIRECTIONS:
-        incoming:
-            -\|/-
-            54321
-        outgoing:
-            12345
-            -/|\-
-    '''
     rootDirectionsToSymbol = {
         1: "_",
         2: "/",
