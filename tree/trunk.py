@@ -23,6 +23,7 @@ class Trunk:
             self._beginBranching()
         if random.random() < self.lengthenProbability:
             self._lengthen()
+            self.lengthenProbability += -0.1
 
     def getTrunkDict(self):
         return self.trunkDict
