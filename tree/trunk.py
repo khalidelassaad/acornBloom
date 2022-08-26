@@ -15,7 +15,7 @@ class Trunk:
         self.thickeningThreshold = random.choice(range(3, 6))
         self.branchingThreshold = random.choice(range(8, 9))
         self.lengthenProbability = 1
-        self.insertTrunkSegmentAtBottomProbability = 1
+        self.insertTrunkSegmentAtBottomProbability = 0.5
         self.isThick = False
         self.highestTrunk = 0
 
@@ -27,7 +27,7 @@ class Trunk:
             self._beginBranching()
         if random.random() < self.lengthenProbability:
             self._lengthen()
-            self.lengthenProbability += -0.1
+            self.lengthenProbability += -0.05
 
     def getTrunkDict(self):
         trunkDict = self.trunkDict.copy()
@@ -68,9 +68,10 @@ class Trunk:
 
     def _lengthen(self):
         self.highestTrunk += 1
-        DEBUGinsertAtBottom = random.random(
+        insertAtBottom = random.random(
         ) < self.insertTrunkSegmentAtBottomProbability and self.highestTrunk > 3
-        if DEBUGinsertAtBottom:
+
+        if insertAtBottom:
             newTrunkCoords = (-1, 0)
             for i in range(self.highestTrunk, 1, -1):
                 # Shift trunkDict "up 1", all except (0,0)
@@ -88,8 +89,7 @@ class Trunk:
                     "isBranchRoot": False
                 }
             },
-            # TODO: remove all occurrences of debug var
-            "symbol": [self._getTrunkChar(), "%"][DEBUGinsertAtBottom]
+            "symbol": self._getTrunkChar()
         }
 
     def _getTrunkChar(self):

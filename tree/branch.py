@@ -1,9 +1,13 @@
+import random
+
+
 class Branch:
     def __init__(self, branchOriginDataDict):
+        firstBranch = random.choice([((0, 1), "/"), ((0, -1), "\\")])
+
         self.branchDict = {
             (0, 0): branchOriginDataDict,
-            # TODO: remove "K" and render branches properly
-            (0, 1): {"symbol": "K"}
+            firstBranch[0]: {"symbol": firstBranch[1]}
         }
 
         # TODO: add a branch!

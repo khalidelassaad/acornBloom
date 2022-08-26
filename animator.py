@@ -16,4 +16,4 @@ def startAnimationLoop(worldArray, cursesScreen):
             worldArrayWithTree = drawTreeOnWorldArray(
                 worldArray, tree, showAge=True)
         renderWorld(cursesScreen, worldArrayWithTree)
-        sleep(.5)
+        sleep(.1)
