@@ -29,6 +29,8 @@ class Trunk:
 
     def _thicken(self):
         self.isThick = True
+        for data in self.trunkDict.values():
+            data["symbol"] = self._getTrunkChar()
 
     def _beginBranching(self):
         pass
