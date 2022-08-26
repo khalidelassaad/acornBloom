@@ -3,6 +3,8 @@ import random
 
 class Trunk:
 
+    trunkSymbols = ["|", "‖"]
+
     def __init__(self, originDataDict):
         self.trunkDict = {
             (0, 0): originDataDict
@@ -10,6 +12,8 @@ class Trunk:
         self.thickeningThreshold = random.choice(range(3, 6))
         self.branchingThreshold = random.choice(range(2, 4))
         self.lengthenProbability = 1
+        self.isThick = False
+        self.highestTrunk = 0
 
     def handleAging(self, treeAge):
         # called by Tree.handleAging
@@ -24,10 +28,22 @@ class Trunk:
         return self.trunkDict
 
     def _thicken(self):
-        pass
+        self.isThick = True
 
     def _beginBranching(self):
         pass
 
     def _lengthen(self):
-        pass
+        self.highestTrunk += 1
+        newTrunkCoords = (-self.highestTrunk, 0)
+        self.trunkDict[newTrunkCoords] = {
+            "type": {
+                "trunk": {
+                    "isBranchRoot": False
+                }
+            },
+            "symbol": self._getTrunkChar()
+        }
+
+    def _getTrunkChar(self):
+        return Trunk.trunkSymbols[self.isThick]

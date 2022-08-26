@@ -15,4 +15,4 @@ def startAnimationLoop(worldArray, cursesScreen):
             tree.ageOneYear()
             drawTreeOnWorldArray(worldArray, tree, showAge=True)
         renderWorld(cursesScreen, worldArray)
-        sleep(.01)
+        sleep(.5)
