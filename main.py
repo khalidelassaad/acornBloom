@@ -12,8 +12,6 @@ def runSimulation(cursesScreen):
 
     startKeyboardListeners()
     startAnimationLoop(worldArray, cursesScreen)
-    cursesScreen.getkey()
-    return
 
 
 if __name__ == "__main__":

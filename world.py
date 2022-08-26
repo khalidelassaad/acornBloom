@@ -1,4 +1,4 @@
-def initializeWorld(worldArray):
+def addHorizonToWorldArray(worldArray):
     height = len(worldArray)
     width = len(worldArray[0])
     horizonLevel = (height * 3) // 5

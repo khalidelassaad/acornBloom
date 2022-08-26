@@ -18,19 +18,25 @@ def renderWorld(cursesScreen, worldArray):
 
 
 def drawTreeOnWorldArray(worldArray, tree: Tree, showAge=False):
+    worldArrayCopy = []
+    for row in worldArray:
+        worldArrayCopy.append(row.copy())
+
     treeY, treeX = tree.getCoords()
     for coords, data in tree.getTreeDictItems():
         symbol = data["symbol"]
         pieceY, pieceX = coords
         try:
-            worldArray[treeY + pieceY][treeX + pieceX] = symbol
+            worldArrayCopy[treeY + pieceY][treeX + pieceX] = symbol
         except IndexError:
             pass
 
     charSpace = 2
     for char in str(tree.age):
-        worldArray[treeY][treeX + charSpace] = char
+        worldArrayCopy[treeY][treeX + charSpace] = char
         charSpace += 1
+
+    return worldArrayCopy
 
 
 if __name__ == "__main__":
