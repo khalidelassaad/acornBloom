@@ -37,9 +37,9 @@ class Roots:
         5: (0, 1)
     }
 
-    def __init__(self, rootDataDict):
+    def __init__(self, originDataDict):
         self.rootDict = {
-            (0, 0): rootDataDict
+            (0, 0): originDataDict
         }
 
         self.rootsLeft = 0

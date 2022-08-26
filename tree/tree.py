@@ -1,4 +1,5 @@
 from tree.roots import Roots
+from tree.trunk import Trunk
 
 
 class Tree:
@@ -19,6 +20,7 @@ class Tree:
             "symbol": "@"
         }
         self.rootsObject = Roots(self.originDataDict)
+        self.trunkObject = Trunk(self.originDataDict)
 
     def getCoords(self):
         return (self.y, self.x)
@@ -29,10 +31,13 @@ class Tree:
         return self.age
 
     def handleAging(self):
+        # TODO: age different components differently
         if self.age % 1 == 0:
             self.rootsObject.handleAging()
+            self.trunkObject.handleAging(self.age)
 
     def getTreeDictItems(self):
         treeDict = dict()
         treeDict.update(self.rootsObject.getRootDict())
+        treeDict.update(self.trunkObject.getTrunkDict())
         return treeDict.items()
