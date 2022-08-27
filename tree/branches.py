@@ -14,10 +14,10 @@ class BranchNode:
         6: "\\"
     }
 
-    def __init__(self, direction, growthChildren=[], branchChildren=[]):
+    def __init__(self, direction, growthChildren=None, branchChildren=None):
         self.direction = direction
-        self.growthChildren = growthChildren
-        self.branchChildren = branchChildren
+        self.growthChildren = growthChildren if growthChildren else []
+        self.branchChildren = branchChildren if branchChildren else []
 
     def hasBranched(self):
         return not not self.branchChildren
