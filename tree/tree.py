@@ -32,8 +32,9 @@ class Tree:
 
     def handleAging(self):
         # TODO: age different components differently
-        if self.age % 1 == 0:
+        if self.age % 3 == 0:
             self.rootsObject.handleAging()
+        if self.age % 1 == 0:
             self.trunkObject.handleAging(self.age)
 
     def getTreeDictItems(self):

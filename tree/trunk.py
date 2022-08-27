@@ -16,7 +16,7 @@ class Trunk:
         self.thickeningThreshold = random.choice(range(3, 6))
         self.branchingThreshold = random.choice(range(8, 9))
         self.lengthenProbability = 1
-        self.insertTrunkSegmentAtBottomProbability = 0.5
+        self.insertTrunkSegmentAtBottomProbability = 0.9
         self.isThick = False
         self.highestTrunk = 0
 
