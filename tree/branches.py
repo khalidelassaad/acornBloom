@@ -14,10 +14,11 @@ class BranchNode:
         6: "\\"
     }
 
-    def __init__(self, direction, growthChildren=None, branchChildren=None):
+    def __init__(self, direction, growthChildren=None, branchChildren=None, isOrigin=False):
         self.direction = direction
         self.growthChildren = growthChildren if growthChildren else []
         self.branchChildren = branchChildren if branchChildren else []
+        self.isOrigin = isOrigin
 
     def hasBranched(self):
         return not not self.branchChildren
@@ -29,6 +30,8 @@ class BranchNode:
         return self.hasBranched() or self.hasGrown()
 
     def getSymbol(self):
+        if self.isOrigin:
+            return "‖"
         return BranchNode.mapDirectionToSymbol[self.direction]
 
     def newBranch(self, branchNode):
@@ -87,7 +90,7 @@ class Branches:
         branchChildNode = BranchNode(random.choice((2, 4)))
 
         self.rootBranchNode = BranchNode(
-            3, branchChildren=[branchChildNode])
+            3, branchChildren=[branchChildNode], isOrigin=True)
         self.branchOriginDataDict = branchOriginDataDict
 
         self.growthProbability = .75

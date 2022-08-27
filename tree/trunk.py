@@ -28,7 +28,7 @@ class Trunk:
             self._beginBranching()
         if random.random() < self.lengthenProbability:
             self._lengthen()
-            self.lengthenProbability += -0.05
+            self.lengthenProbability *= 0.8
 
         for branchObject in self.branchObjectsList:
             branchObject.handleAging()
