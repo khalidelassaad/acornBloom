@@ -31,11 +31,11 @@ class BranchNode:
     def getSymbol(self):
         return BranchNode.mapDirectionToSymbol[self.direction]
 
-    def newBranch(self, direction):
-        self.branchChildren.append(BranchNode(direction))
+    def newBranch(self, branchNode):
+        self.branchChildren.append(branchNode)
 
-    def newGrowth(self, direction):
-        self.growthChildren.append(BranchNode(direction))
+    def newGrowth(self, branchNode):
+        self.growthChildren.append(branchNode)
 
 
 class Branches:
@@ -145,7 +145,7 @@ class Branches:
         growableBranches = self._getGrowableBranches()
         branchNodeToGrow = random.choice(growableBranches)
         childDirection = branchNodeToGrow.direction
-        branchNodeToGrow.newGrowth(childDirection)
+        branchNodeToGrow.newGrowth(BranchNode(childDirection))
 
     def _getBranchableBranches(self):
         return self._getAgingCandidates(True)
@@ -160,7 +160,7 @@ class Branches:
             branchableDirections.remove(branchChild.direction)
 
         childDirection = random.choice(branchableDirections)
-        branchNodeToGrow.newBranch(childDirection)
+        branchNodeToGrow.newBranch(BranchNode(childDirection))
 
     def handleAging(self):
         # for now, grow a new segment every tick
