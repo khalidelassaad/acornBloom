@@ -153,8 +153,13 @@ class Branches:
     def _branchChild(self):
         branchableBranches = self._getBranchableBranches()
         branchNodeToGrow = random.choice(branchableBranches)
-        childDirection = random.choice(
-            Branches.mapDirectionToBranchDirections[branchNodeToGrow.direction])
+
+        branchableDirections = Branches.mapDirectionToBranchDirections[branchNodeToGrow.direction]
+
+        for branchChild in branchNodeToGrow.branchChildren:
+            branchableDirections.remove(branchChild.direction)
+
+        childDirection = random.choice(branchableDirections)
         branchNodeToGrow.newBranch(childDirection)
 
     def handleAging(self):
