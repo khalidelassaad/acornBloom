@@ -8,7 +8,7 @@
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "/Users/khalidelassaad/personal/acornBloom/main.py",
             "console": "integratedTerminal",
             "justMyCode": true
         }

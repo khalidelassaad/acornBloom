@@ -25,11 +25,22 @@ class BranchNode:
     def hasGrown(self):
         return not not self.growthChildren
 
+    def hasChildren(self):
+        return self.hasBranched() or self.hasGrown()
+
     def getSymbol(self):
         return BranchNode.mapDirectionToSymbol[self.direction]
 
+    def newBranch(self, direction):
+        self.branchChildren.append(BranchNode(direction))
+
+    def newGrowth(self, direction):
+        self.growthChildren.append(BranchNode(direction))
+
 
 class Branches:
+    # Spawns one visible branch (either left or right) when init'd
+
     # DIRECTIONS:
     #     2 3 4
     #      \|/
@@ -73,15 +84,84 @@ class Branches:
     }
 
     def __init__(self, branchOriginDataDict):
-        leftBranchNode = BranchNode(2)
-        rightBranchNode = BranchNode(4)
+        branchChildNode = BranchNode(random.choice((2, 4)))
 
         self.rootBranchNode = BranchNode(
-            3, branchChildren=[leftBranchNode, rightBranchNode])
+            3, branchChildren=[branchChildNode])
         self.branchOriginDataDict = branchOriginDataDict
 
+        self.growthProbability = .75
+
+    def _recursiveAgingSearch(self, branchNode, grabBranchableCandidates, returnList):
+        # If it's grown, it can't branch
+        # If it's branched, it can't grow
+
+        # Base Case
+        if not branchNode.hasChildren():
+            returnList.append(branchNode)
+            return returnList
+
+        # Recursive Case
+        if grabBranchableCandidates:
+            # find branchables, given they have children
+            if branchNode.hasGrown():
+                self._recursiveAgingSearch(
+                    branchNode.growthChildren[0], grabBranchableCandidates, returnList)
+                return returnList
+            elif len(branchNode.branchChildren) < 2:
+                returnList.append(branchNode)
+                self._recursiveAgingSearch(
+                    branchNode.branchChildren[0], grabBranchableCandidates, returnList)
+                return returnList
+            else:
+                self._recursiveAgingSearch(
+                    branchNode.branchChildren[0], grabBranchableCandidates, returnList)
+                self._recursiveAgingSearch(
+                    branchNode.branchChildren[1], grabBranchableCandidates, returnList)
+                return returnList
+        else:
+            # find growables, given they have children
+            if branchNode.hasBranched():
+                for branchChild in branchNode.branchChildren:
+                    self._recursiveAgingSearch(
+                        branchChild, grabBranchableCandidates, returnList)
+                return returnList
+            else:
+                returnList.append(branchNode)
+                self._recursiveAgingSearch(
+                    branchNode.growthChildren[0], grabBranchableCandidates, returnList)
+                return returnList
+
+    def _getAgingCandidates(self, grabBranchableCandidates):
+        returnList = []
+        self._recursiveAgingSearch(
+            self.rootBranchNode, grabBranchableCandidates, returnList)
+        return returnList
+
+    def _getGrowableBranches(self):
+        return self._getAgingCandidates(False)
+
+    def _growChild(self):
+        growableBranches = self._getGrowableBranches()
+        branchNodeToGrow = random.choice(growableBranches)
+        childDirection = branchNodeToGrow.direction
+        branchNodeToGrow.newGrowth(childDirection)
+
+    def _getBranchableBranches(self):
+        return self._getAgingCandidates(True)
+
+    def _branchChild(self):
+        branchableBranches = self._getBranchableBranches()
+        branchNodeToGrow = random.choice(branchableBranches)
+        childDirection = Branches.mapDirectionToBranchDirections[branchNodeToGrow.direction]
+        branchNodeToGrow.newBranch(childDirection)
+
     def handleAging(self):
-        pass
+        # for now, grow a new segment every tick
+        if random.random() < self.growthProbability:
+            self._growChild()
+        else:
+            self._branchChild()
 
     def _recursiveBranchDict(self, coords, branchNode: BranchNode):
         returnDict = dict()

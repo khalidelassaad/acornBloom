@@ -30,6 +30,9 @@ class Trunk:
             self._lengthen()
             self.lengthenProbability += -0.05
 
+        for branchObject in self.branchObjectsList:
+            branchObject.handleAging()
+
     def getTrunkDict(self):
         trunkDict = self.trunkDict.copy()
         for trunkCoords, trunkSegmentData in self.trunkDict.items():
