@@ -154,13 +154,15 @@ class Branches:
         branchableBranches = self._getBranchableBranches()
         branchNodeToGrow = random.choice(branchableBranches)
 
-        branchableDirections = Branches.mapDirectionToBranchDirections[branchNodeToGrow.direction]
+        branchableDirections = Branches.mapDirectionToBranchDirections[branchNodeToGrow.direction].copy(
+        )
 
         for branchChild in branchNodeToGrow.branchChildren:
             branchableDirections.remove(branchChild.direction)
 
-        childDirection = random.choice(branchableDirections)
-        branchNodeToGrow.newBranch(BranchNode(childDirection))
+        if branchableDirections:
+            childDirection = random.choice(branchableDirections)
+            branchNodeToGrow.newBranch(BranchNode(childDirection))
 
     def handleAging(self):
         # for now, grow a new segment every tick
