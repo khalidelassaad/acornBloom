@@ -22,14 +22,17 @@ def drawTreeOnWorldArray(worldArray, tree: Tree, showAge=False):
     for row in worldArray:
         worldArrayCopy.append(row.copy())
 
+    height = len(worldArrayCopy)
+    width = len(worldArrayCopy[0])
+
     treeY, treeX = tree.getCoords()
     for coords, data in tree.getTreeDictItems():
         symbol = data["symbol"]
         pieceY, pieceX = coords
-        try:
-            worldArrayCopy[treeY + pieceY][treeX + pieceX] = symbol
-        except IndexError:
-            pass
+        outY = treeY + pieceY
+        outX = treeX + pieceX
+        if not (outY < 0 or outY >= height or outX < 0 or outX >= width):
+            worldArrayCopy[outY][outX] = symbol
 
     charSpace = 2
     for char in str(tree.age):

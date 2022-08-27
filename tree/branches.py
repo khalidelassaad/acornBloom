@@ -93,7 +93,7 @@ class Branches:
             3, branchChildren=[branchChildNode], isOrigin=True)
         self.branchOriginDataDict = branchOriginDataDict
 
-        self.growthProbability = .75
+        self.growthProbability = .5
 
     def _recursiveAgingSearch(self, branchNode, grabBranchableCandidates, returnList):
         # If it's grown, it can't branch
